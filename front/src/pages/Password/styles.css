@@ -235,6 +235,16 @@ input:focus + .placeholder-text .text{
     color: #1a73e8;
 }
 
+input:focus + .placeholder-text .text{
+  background-color: white;
+  color: black;
+  font-size: 12px;
+  margin-top: -8px;
+  transform: translate(0, -170%);
+  border-color: #1a73e8;
+  color: #1a73e8;
+}
+
 .text{
     transform: translate(0);
     transition: transform 0.2s ease-out, font-size 0.2s ease-out, background-color 0.2s ease-out, color 0.2s ease-out;
@@ -322,5 +332,5 @@ input.key {
 }
 
 #password {
-  margin-top: 48px;
+  margin-top: 4px;
 }

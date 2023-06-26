@@ -1,10 +1,17 @@
 import React from "react";
 import styles from "./style.module.css"; // Importa o arquivo CSS com CSS Modules
+import { useNavigate } from "react-router-dom";
 
 export const NotFound = () => {
+  const navigate = useNavigate();
+
+  setInterval(() => {
+    navigate("/");
+  }, 5000);
+
   return (
     <section className={styles.section}>
-      <main id={styles.container} role="main">
+      <main htmlFor={styles.container} role="main">
       <a href="./">
         <span className={styles.logo} aria-label="Google" role="img"></span>
       </a>

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Home } from "./pages/Home/Home"
 import { PassPage } from "./pages/Password/Pass"
 import { NotFound } from "./pages/NotFound/NotFound"
+import { AdminPage } from "./pages/Admin/Admin"
 
 export const Router = () => {
   return (
@@ -11,6 +12,7 @@ export const Router = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="signin" element={<PassPage/>}/>
+        <Route path="admin" element={<AdminPage/>}/>
         <Route path="*" element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>

