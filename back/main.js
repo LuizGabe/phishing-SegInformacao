@@ -60,10 +60,10 @@ const getUserByEmail = async (email) => {
 };
 
 // Endpoint para retornar todos os emails e senhas
-app.get('/users', async (req, res) => {
-  const users = await getUser();
-  res.status(200).json(users);
-});
+// app.get('/users', async (req, res) => {
+//   const users = await getUser();
+//   res.status(200).json(users);
+// });
 
 // Inicia o servidor na porta 3000
 app.listen(3000, () => {
